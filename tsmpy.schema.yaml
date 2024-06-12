@@ -3,7 +3,7 @@
 schema:
   schema_id: tsmpy
   name: "(bùhán cíhuì) Pīnyīnhuà hànyǔ shūrùfǎ"
-  version: "0.10"
+  version: "0.20"
   author:
     - "Shimada Mizuki"
   description: |
@@ -250,6 +250,8 @@ punctuator:
     "/" : "/"
     "\\" : "\\"
     ";" : ";"
+    "(" : "("
+    ")" : ")"
 
 key_binder:
   import_preset: default
