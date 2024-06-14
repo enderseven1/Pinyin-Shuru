@@ -3,7 +3,7 @@
 schema:
   schema_id: tsmpy
   name: "(bùhán cíhuì) Pīnyīnhuà hànyǔ shūrùfǎ"
-  version: "0.20"
+  version: "0.30"
   author:
     - "Shimada Mizuki"
   description: |
@@ -25,7 +25,6 @@ engine:
     - punctuator
     - selector
     - navigator
-    - fluency_editor
     - express_editor
   segmentors:
     - ascii_segmentor
@@ -43,22 +42,30 @@ engine:
     - uniquifier
 
 menu:
-  page_size: 6
+  page_size: 5
 
 speller:
-  alphabet: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234
-  delimiter: " '"
+  alphabet: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-*/.
+  delimiter: "'"
   initials: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+  auto_select: True
   algebra:
-    - abbrev/^([a-z]).+$/$1/ #Jiǎnpīn
-    - abbrev/^([zcs]h).+$/$1/ #Móhúyīn
-    - derive/^([nl])ve$/$1ue/ #Jiāng UE tìhuànwéi VE
+    - abbrev/^([A-Za-z]).+$/$1/ #Jiǎnpīn
+    - abbrev/^([zcsZCS]h).+$/$1/ #Móhúyīn
+    - derive/^([nlNL])ve$/$1ue/ #Jiāng UE tìhuànwéi VE
+    - derive/ü/v/ #Jiāng V tìhuànwéi ü
     - derive/ui$/uei/ #
     - derive/iu$/iou/
-    - derive/([aeiou])ng$/$1gn/
+    - derive/([aeiouAEIOU])ng$/$1gn/
+    - derive/([dtnlgkhrzcsDTNLGHKRZCS])un/$1uen/
     - derive/ong$/on/
     - derive/ao$/oa/
+    - derive/ir$/ier/
+    - derive/ir4$/i4er/
+    - derive/ir3$/i3er/
     - derive/([iu])a(o|ng?)$/a$1$2/
+    - derive/^([A-Za-z]+)[1-5]$/$1/
+    - 'xlit 12345 +-*/.'
 
 translator:
   dictionary: tsmpy
@@ -124,6 +131,9 @@ translator:
     - xform/i2/í/
     - xform/i3/ǐ/
     - xform/i4/ì/
+    - xform/ir3/ǐr/
+    - xform/ir4/ìr/
+    - xform/ir5/ir/
     - xform/in1/īn/
     - xform/in2/ín/
     - xform/in3/ǐn/
@@ -147,91 +157,153 @@ translator:
     - xform/ng2/ńg/
     - xform/ng3/ňg/
     - xform/ng4/g/
+    - xform/v5/ü/
+    - xform/a5/a/
+    - xform/ai5/ai/
+    - xform/ao5/ao/
+    - xform/an5/an/
+    - xform/ang5/ang/
+    - xform/o5/o/
+    - xform/ou5/ou/
+    - xform/ong5/ong/
+    - xform/e5/e/
+    - xform/ei5/ei/
+    - xform/en5/en/
+    - xform/eng5/eng/
+    - xform/er5/er/
+    - xform/i5/i/
+    - xform/in5/in/
+    - xform/ing5/ing/
+    - xform/u5/u/
+    - xform/un5/un/
+    - xform/m5/m/
+    - xform/n5/n/
+    - xform/ng5/ng/
+    - xform/^1/ˉ/
+    - xform/^2/ˊ/
+    - xform/^3/ˇ/
+    - xform/^4/ˋ/
+    - xform/^5/·/
+    - xform/eh1/ê̄/
+    - xform/eh2/ế/
+    - xform/eh3/ê̌/
+    - xform/eh4/ề/
+    - xform/eh5/ê/
   preedit_format:
-    - xform/v1/ǖ/
-    - xform/v2/ǘ/
-    - xform/v3/ǚ/
-    - xform/v4/ǜ/
-    - xform/v/ü/
-    - xform/a1/ā/
-    - xform/a2/á/
-    - xform/a3/ǎ/
-    - xform/a4/à/
-    - xform/ai1/āi/
-    - xform/ai2/ái/
-    - xform/ai3/ǎi/
-    - xform/ai4/ài/
-    - xform/ao1/āo/
-    - xform/ao2/áo/
-    - xform/ao3/ǎo/
-    - xform/ao4/ào/
-    - xform/an1/ān/
-    - xform/an2/án/
-    - xform/an3/ǎn/
-    - xform/an4/àn/
-    - xform/ang1/āng/
-    - xform/ang2/áng/
-    - xform/ang3/ǎng/
-    - xform/ang4/àng/
-    - xform/o1/ō/
-    - xform/o2/ó/
-    - xform/o3/ǒ/
-    - xform/o4/ò/
-    - xform/ou1/ōu/
-    - xform/ou2/óu/
-    - xform/ou3/ǒu/
-    - xform/ou4/òu/
-    - xform/ong1/ōng/
-    - xform/ong2/óng/
-    - xform/ong3/ǒng/
-    - xform/ong4/òng/
-    - xform/e1/ē/
-    - xform/e2/é/
-    - xform/e3/ě/
-    - xform/e4/è/
-    - xform/ei1/ēi/
-    - xform/ei2/éi/
-    - xform/ei3/ěi/
-    - xform/ei4/èi/
-    - xform/en1/ēn/
-    - xform/en2/én/
-    - xform/en3/ěn/
-    - xform/en4/èn/
-    - xform/eng1/ēng/
-    - xform/eng2/éng/
-    - xform/eng3/ěng/
-    - xform/eng4/èng/
-    - xform/er1/ēr/
-    - xform/er2/ér/
-    - xform/er3/ěr/
-    - xform/er4/èr/
-    - xform/i1/ī/
-    - xform/i2/í/
-    - xform/i3/ǐ/
-    - xform/i4/ì/
-    - xform/in1/īn/
-    - xform/in2/ín/
-    - xform/in3/ǐn/
-    - xform/in4/ìn/
-    - xform/ing1/īng/
-    - xform/ing2/íng/
-    - xform/ing3/ǐng/
-    - xform/ing4/ìng/
-    - xform/u1/ū/
-    - xform/u2/ú/
-    - xform/u3/ǔ/
-    - xform/u4/ù/
-    - xform/un1/ūn/
-    - xform/un2/ún/
-    - xform/un3/ǔn/
-    - xform/un4/ùn/
-    - xform/m2//
-    - xform/n2/ń/
-    - xform/n3/ň/
-    - xform/n4//
-    - xform/ng2/ńg/
-    - xform/ng3/ňg/
-    - xform/ng4/g/
+    - 'xform eh\+ ê̄'
+    - 'xform eh- ế'
+    - 'xform eh\* ê̌'
+    - 'xform eh/ ề'
+    - 'xform eh\. ê'
+    - 'xform v\+ ǖ'
+    - 'xform v- ǘ'
+    - 'xform v\* ǚ'
+    - 'xform v/ ǜ'
+    - 'xform v ü'
+    - 'xform a\+ ā'
+    - 'xform a- á'
+    - 'xform a\* ǎ'
+    - 'xform a/ à'
+    - 'xform ai\+ āi'
+    - 'xform ai- ái'
+    - 'xform ai\* ǎi'
+    - 'xform ai/ ài'
+    - 'xform ao\+ āo'
+    - 'xform ao- áo'
+    - 'xform ao\* ǎo'
+    - 'xform ao/ ào'
+    - 'xform an\+ ān'
+    - 'xform an- án'
+    - 'xform an\* ǎn'
+    - 'xform an/ àn'
+    - 'xform ang\+ āng'
+    - 'xform ang- áng'
+    - 'xform ang\* ǎng'
+    - 'xform ang/ àng'
+    - 'xform o\+ ō'
+    - 'xform o- ó'
+    - 'xform o\* ǒ'
+    - 'xform o/ ò'
+    - 'xform ou\+ ōu'
+    - 'xform ou- óu'
+    - 'xform ou\* ǒu'
+    - 'xform ou/ òu'
+    - 'xform ong\+ ōng'
+    - 'xform ong- óng'
+    - 'xform ong\* ǒng'
+    - 'xform ong/ òng'
+    - 'xform e\+ ē'
+    - 'xform e- é'
+    - 'xform e\* ě'
+    - 'xform e/ è'
+    - 'xform ei\+ ēi'
+    - 'xform ei- éi'
+    - 'xform ei\* ěi'
+    - 'xform ei/ èi'
+    - 'xform en\+ ēn'
+    - 'xform en- én'
+    - 'xform en\* ěn'
+    - 'xform en/ èn'
+    - 'xform eng\+ ēng'
+    - 'xform eng- éng'
+    - 'xform eng\* ěng'
+    - 'xform eng/ èng'
+    - 'xform er\+ ēr'
+    - 'xform er- ér'
+    - 'xform er\* ěr'
+    - 'xform er/ èr'
+    - 'xform i\+ ī'
+    - 'xform i- í'
+    - 'xform i\* ǐ'
+    - 'xform i/ ì'
+    - 'xform ir\* ǐr'
+    - 'xform ir/ ìr'
+    - 'xform ir\. ir'
+    - 'xform in\+ īn'
+    - 'xform in- ín'
+    - 'xform in\* ǐn'
+    - 'xform in/ ìn'
+    - 'xform ing\+ īng'
+    - 'xform ing- íng'
+    - 'xform ing\* ǐng'
+    - 'xform ing/ ìng'
+    - 'xform u\+ ū'
+    - 'xform u- ú'
+    - 'xform u\* ǔ'
+    - 'xform u/ ù'
+    - 'xform un\+ ūn'
+    - 'xform un- ún'
+    - 'xform un\* ǔn'
+    - 'xform un/ ùn'
+    - 'xform m- '
+    - 'xform n- ń'
+    - 'xform n\* ň'
+    - 'xform n/ '
+    - 'xform ng- ńg'
+    - 'xform ng\* ňg'
+    - 'xform ng/ g'
+    - 'xform v\. ü'
+    - 'xform a\. a'
+    - 'xform ai\. ai'
+    - 'xform ao\. ao'
+    - 'xform an\. an'
+    - 'xform ang\. ang'
+    - 'xform o\. o'
+    - 'xform ou\. ou'
+    - 'xform ong\. ong'
+    - 'xform e\. e'
+    - 'xform ei\. ei'
+    - 'xform en\. en'
+    - 'xform eng\. eng'
+    - 'xform er\. er'
+    - 'xform i\. i'
+    - 'xform in\. in'
+    - 'xform ing\. ing'
+    - 'xform u\. u'
+    - 'xform un\. un'
+    - 'xform m\. m'
+    - 'xform n\. n'
+    - 'xform ng\. ng'
 
 punctuator:
   import_preset: default
@@ -256,10 +328,21 @@ punctuator:
 key_binder:
   import_preset: default
   bindings:
-    - { when: always, accept: KP_1, send: 1 } 
-    - { when: always, accept: KP_2, send: 2 } 
-    - { when: always, accept: KP_3, send: 3 } 
-    - { when: always, accept: KP_4, send: 4 } 
+    # - { when: always, accept: KP_1, send: 1 } 
+    # - { when: always, accept: KP_2, send: 2 } 
+    # - { when: always, accept: KP_3, send: 3 } 
+    # - { when: always, accept: KP_4, send: 4 } 
+    # - { when: always, accept: KP_5, send: 5 } 
+    # - { when: always, accept: KP_6, send: 6 } 
+    # - { when: always, accept: KP_7, send: 7 } 
+    # - { when: always, accept: KP_8, send: 8 } 
+    # - { when: always, accept: KP_9, send: 9 } 
+    # - { when: always, accept: KP_0, send: 0 } 
+    - { when: always, accept: KP_Add, send: plus } 
+    - { when: always, accept: KP_Multiply, send: asterisk } 
+    - { when: always, accept: KP_Subtract, send: minus } 
+    - { when: always, accept: KP_Divide, send: slash } 
+    - { when: always, accept: KP_Decimal, send: period } 
 recognizer:
   patterns:
     reverse_lookup: "`[a-z]*$"
