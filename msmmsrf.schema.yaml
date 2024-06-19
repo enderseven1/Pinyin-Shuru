@@ -1,0 +1,104 @@
+# Rime schema settings
+# encoding: utf-8
+schema:
+  schema_id: msmmsrf
+  name: "摩斯密码输入法"
+  version: "0.31"
+  author:
+    - "制作 岛田水木（主要创作）、TsinswrengGwāng（重要技术支持）"
+  description: |
+    "本输入法使用小键盘-.按键输入，支持几乎所有Unicode字符。其中基本拉丁文字区段的字符依照标准摩斯密码表。"
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中, 英 ]
+  - name: full_shape
+    states: [ 全, 半 ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - selector
+    - punctuator
+    - navigator
+    - express_editor 
+    - fluid_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - r10n_translator
+    - reverse_lookup_translator
+    - table_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+menu:
+  page_size: 6
+
+speller:
+  alphabet: "-. /"
+  delimiter: " '"
+  # use_space: true
+  initials: "-."
+  finals: "-."
+  auto_select: true
+  # algebra:
+
+#
+
+translator:
+  dictionary: msmmsrf
+  enable_user_dict: false
+  enable_completion: false
+  enable_encoder: false
+  enable_sentence: false
+  comment_format:
+    
+  preedit_format:
+    - xform/'/ /
+
+punctuator:
+  import_preset: default
+  half_shape:
+    "." : "."
+    "," : ","
+    "!" : "!"
+    "?" : "?"
+    ":" : ":"
+    '"' : '"'
+    "'" : "'"
+    "[" : "["
+    "]" : "]"
+    "{" : "{"
+    "}" : "}"
+    "/" : "/"
+    "\\" : "\\"
+    ";" : ";"
+    "(" : "("
+    ")" : ")"
+
+editor:
+  bindings:
+    Return: commit_script_text
+
+key_binder:
+  import_preset: default
+  bindings: 
+    - { when: always, accept: KP_Subtract, send: minus } 
+    - { when: always, accept: KP_Divide, send: slash } 
+    - { when: always, accept: KP_Decimal, send: period } 
+    - { when: has_menu, accept: space, send: apostrophe } 
+
+recognizer:
+  patterns:
+    reverse_lookup: "`[a-z]*$"
