@@ -3,18 +3,20 @@
 schema:
   schema_id: msmmsrf
   name: "摩斯密码输入法"
-  version: "0.31"
+  version: "0.32"
   author:
-    - "制作 岛田水木（主要创作）、TsinswrengGwāng（重要技术支持）"
+    - 制作 岛田水木（主要创作）、TsinswrengGwāng（重要技术支持）
   description: |
-    "本输入法使用小键盘-.按键输入，支持几乎所有Unicode字符。其中基本拉丁文字区段的字符依照标准摩斯密码表。"
+    本输入法使用小键盘-.按键输入，支持几乎所有Unicode字符。
+    其中基本拉丁文字区段的字符依照标准摩斯密码表。
+    注意：标准摩斯密码表不区分26个字母大小写，默认出大写，在输入单个字母时可使用↓键或Pagedown键切换至小写。
 
 switches:
   - name: ascii_mode
     reset: 0
     states: [ 中, 英 ]
   - name: full_shape
-    states: [ 全, 半 ]
+    states: [ 半, 全 ]
 
 engine:
   processors:
@@ -43,7 +45,7 @@ engine:
     - uniquifier
 
 menu:
-  page_size: 6
+  page_size: 1
 
 speller:
   alphabet: "-. /"
@@ -52,6 +54,8 @@ speller:
   initials: "-."
   finals: "-."
   auto_select: true
+  max_code_length: 21
+  enable_sentence: false
   # algebra:
 
 #
@@ -63,6 +67,7 @@ translator:
   enable_encoder: false
   enable_sentence: false
   comment_format:
+    - xform/'/ /
     
   preedit_format:
     - xform/'/ /
@@ -98,6 +103,8 @@ key_binder:
     - { when: always, accept: KP_Divide, send: slash } 
     - { when: always, accept: KP_Decimal, send: period } 
     - { when: has_menu, accept: space, send: apostrophe } 
+    - { when: paging, accept: bracketleft, send: Page_Up }
+    - { when: has_menu, accept: bracketright, send: Page_Down }
 
 recognizer:
   patterns:
