@@ -3,13 +3,14 @@
 schema:
   schema_id: msmmsrf
   name: "摩斯密码输入法"
-  version: "0.32"
+  version: "0.33"
   author:
     - 制作 岛田水木（主要创作）、TsinswrengGwāng（重要技术支持）
   description: |
     本输入法使用小键盘-.按键输入，支持几乎所有Unicode字符。
     其中基本拉丁文字区段的字符依照标准摩斯密码表。
     注意：标准摩斯密码表不区分26个字母大小写，默认出大写，在输入单个字母时可使用↓键或Pagedown键切换至小写。
+    斜杠（/）表示空格，空格表示分码。
 
 switches:
   - name: ascii_mode
@@ -21,51 +22,48 @@ switches:
 engine:
   processors:
     - ascii_composer
-    - recognizer
+    # - recognizer
     - key_binder
     - speller
     - selector
-    - punctuator
+    # - punctuator
     - navigator
-    - express_editor 
-    - fluid_editor
+    - express_editor
   segmentors:
     - ascii_segmentor
-    - matcher
+    # - matcher
     - abc_segmentor
-    - punct_segmentor
-    - fallback_segmentor
+    # - punct_segmentor
+    # - fallback_segmentor
   translators:
-    - punct_translator
-    - r10n_translator
-    - reverse_lookup_translator
+    # - echo_translator
     - table_translator
+    - punct_translator
+    # - r10n_translator
+    # - reverse_lookup_translator
   filters:
     - simplifier
     - uniquifier
 
 menu:
-  page_size: 1
+  page_size: 5
 
 speller:
-  alphabet: "-. /"
+  alphabet: "-.'/"
   delimiter: " '"
-  # use_space: true
-  initials: "-."
-  finals: "-."
-  auto_select: true
   max_code_length: 21
-  enable_sentence: false
+  # use_space: true
+  # auto_select: true
   # algebra:
 
 #
 
 translator:
   dictionary: msmmsrf
+  enable_encoder: false
   enable_user_dict: false
   enable_completion: false
-  enable_encoder: false
-  enable_sentence: false
+  # enable_sentence: false
   comment_format:
     - xform/'/ /
     
@@ -91,16 +89,17 @@ punctuator:
     ";" : ";"
     "(" : "("
     ")" : ")"
+    "-" : "-"
 
 editor:
   bindings:
     Return: commit_script_text
 
 key_binder:
-  import_preset: default
+  # import_preset: default
   bindings: 
     - { when: always, accept: KP_Subtract, send: minus } 
-    - { when: always, accept: KP_Divide, send: slash } 
+    - { when: has_menu, accept: KP_Divide, send: slash } 
     - { when: always, accept: KP_Decimal, send: period } 
     - { when: has_menu, accept: space, send: apostrophe } 
     - { when: paging, accept: bracketleft, send: Page_Up }
